@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9D9FC841163C4BAD0092F49C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC840163C4BAD0092F49C /* UIKit.framework */; };
+		9D9FC843163C4BAD0092F49C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC842163C4BAD0092F49C /* Foundation.framework */; };
+		9D9FC845163C4BAD0092F49C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC844163C4BAD0092F49C /* CoreGraphics.framework */; };
+		9D9FC84B163C4BAD0092F49C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC849163C4BAD0092F49C /* InfoPlist.strings */; };
+		9D9FC84D163C4BAD0092F49C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FC84C163C4BAD0092F49C /* main.m */; };
+		9D9FC851163C4BAD0092F49C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FC850163C4BAD0092F49C /* AppDelegate.m */; };
+		9D9FC853163C4BAD0092F49C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC852163C4BAD0092F49C /* Default.png */; };
+		9D9FC855163C4BAD0092F49C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC854163C4BAD0092F49C /* Default@2x.png */; };
+		9D9FC857163C4BAD0092F49C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC856163C4BAD0092F49C /* Default-568h@2x.png */; };
+		9D9FC85A163C4BAD0092F49C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FC859163C4BAD0092F49C /* ViewController.m */; };
+		9D9FC85D163C4BAD0092F49C /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC85B163C4BAD0092F49C /* ViewController.xib */; };
+		9D9FC865163C4BAD0092F49C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC864163C4BAD0092F49C /* SenTestingKit.framework */; };
+		9D9FC866163C4BAD0092F49C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC840163C4BAD0092F49C /* UIKit.framework */; };
+		9D9FC867163C4BAD0092F49C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC842163C4BAD0092F49C /* Foundation.framework */; };
+		9D9FC86F163C4BAD0092F49C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC86D163C4BAD0092F49C /* InfoPlist.strings */; };
+		9D9FC872163C4BAD0092F49C /* RobotFightTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FC871163C4BAD0092F49C /* RobotFightTests.m */; };
+		9D9FC882163C67B00092F49C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FC880163C67B00092F49C /* SocialNetwork.m */; };
+		9D9FC883163C67B00092F49C /* SocialNetwork.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D9FC881163C67B00092F49C /* SocialNetwork.xib */; };
+		9D9FC885163C6CFC0092F49C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9FC884163C6CFC0092F49C /* Social.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9D9FC868163C4BAD0092F49C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D9FC833163C4BAD0092F49C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D9FC83B163C4BAD0092F49C;
+			remoteInfo = RobotFight;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9D9FC83C163C4BAD0092F49C /* RobotFight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotFight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D9FC840163C4BAD0092F49C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9D9FC842163C4BAD0092F49C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9D9FC844163C4BAD0092F49C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9D9FC848163C4BAD0092F49C /* RobotFight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RobotFight-Info.plist"; sourceTree = "<group>"; };
+		9D9FC84A163C4BAD0092F49C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9D9FC84C163C4BAD0092F49C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9D9FC84E163C4BAD0092F49C /* RobotFight-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RobotFight-Prefix.pch"; sourceTree = "<group>"; };
+		9D9FC84F163C4BAD0092F49C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9D9FC850163C4BAD0092F49C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9D9FC852163C4BAD0092F49C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		9D9FC854163C4BAD0092F49C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		9D9FC856163C4BAD0092F49C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		9D9FC858163C4BAD0092F49C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9D9FC859163C4BAD0092F49C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9D9FC85C163C4BAD0092F49C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		9D9FC863163C4BAD0092F49C /* RobotFightTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotFightTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D9FC864163C4BAD0092F49C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		9D9FC86C163C4BAD0092F49C /* RobotFightTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RobotFightTests-Info.plist"; sourceTree = "<group>"; };
+		9D9FC86E163C4BAD0092F49C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9D9FC870163C4BAD0092F49C /* RobotFightTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RobotFightTests.h; sourceTree = "<group>"; };
+		9D9FC871163C4BAD0092F49C /* RobotFightTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RobotFightTests.m; sourceTree = "<group>"; };
+		9D9FC87F163C67B00092F49C /* SocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialNetwork.h; sourceTree = "<group>"; };
+		9D9FC880163C67B00092F49C /* SocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialNetwork.m; sourceTree = "<group>"; };
+		9D9FC881163C67B00092F49C /* SocialNetwork.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SocialNetwork.xib; sourceTree = "<group>"; };
+		9D9FC884163C6CFC0092F49C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9D9FC839163C4BAD0092F49C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC885163C6CFC0092F49C /* Social.framework in Frameworks */,
+				9D9FC841163C4BAD0092F49C /* UIKit.framework in Frameworks */,
+				9D9FC843163C4BAD0092F49C /* Foundation.framework in Frameworks */,
+				9D9FC845163C4BAD0092F49C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D9FC85F163C4BAD0092F49C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC865163C4BAD0092F49C /* SenTestingKit.framework in Frameworks */,
+				9D9FC866163C4BAD0092F49C /* UIKit.framework in Frameworks */,
+				9D9FC867163C4BAD0092F49C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9D9FC831163C4BAD0092F49C = {
+			isa = PBXGroup;
+			children = (
+				9D9FC846163C4BAD0092F49C /* RobotFight */,
+				9D9FC86A163C4BAD0092F49C /* RobotFightTests */,
+				9D9FC83F163C4BAD0092F49C /* Frameworks */,
+				9D9FC83D163C4BAD0092F49C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9D9FC83D163C4BAD0092F49C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC83C163C4BAD0092F49C /* RobotFight.app */,
+				9D9FC863163C4BAD0092F49C /* RobotFightTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D9FC83F163C4BAD0092F49C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC884163C6CFC0092F49C /* Social.framework */,
+				9D9FC840163C4BAD0092F49C /* UIKit.framework */,
+				9D9FC842163C4BAD0092F49C /* Foundation.framework */,
+				9D9FC844163C4BAD0092F49C /* CoreGraphics.framework */,
+				9D9FC864163C4BAD0092F49C /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9D9FC846163C4BAD0092F49C /* RobotFight */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC84F163C4BAD0092F49C /* AppDelegate.h */,
+				9D9FC850163C4BAD0092F49C /* AppDelegate.m */,
+				9D9FC858163C4BAD0092F49C /* ViewController.h */,
+				9D9FC859163C4BAD0092F49C /* ViewController.m */,
+				9D9FC85B163C4BAD0092F49C /* ViewController.xib */,
+				9D9FC87F163C67B00092F49C /* SocialNetwork.h */,
+				9D9FC880163C67B00092F49C /* SocialNetwork.m */,
+				9D9FC881163C67B00092F49C /* SocialNetwork.xib */,
+				9D9FC847163C4BAD0092F49C /* Supporting Files */,
+			);
+			path = RobotFight;
+			sourceTree = "<group>";
+		};
+		9D9FC847163C4BAD0092F49C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC848163C4BAD0092F49C /* RobotFight-Info.plist */,
+				9D9FC849163C4BAD0092F49C /* InfoPlist.strings */,
+				9D9FC84C163C4BAD0092F49C /* main.m */,
+				9D9FC84E163C4BAD0092F49C /* RobotFight-Prefix.pch */,
+				9D9FC852163C4BAD0092F49C /* Default.png */,
+				9D9FC854163C4BAD0092F49C /* Default@2x.png */,
+				9D9FC856163C4BAD0092F49C /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9D9FC86A163C4BAD0092F49C /* RobotFightTests */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC870163C4BAD0092F49C /* RobotFightTests.h */,
+				9D9FC871163C4BAD0092F49C /* RobotFightTests.m */,
+				9D9FC86B163C4BAD0092F49C /* Supporting Files */,
+			);
+			path = RobotFightTests;
+			sourceTree = "<group>";
+		};
+		9D9FC86B163C4BAD0092F49C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9D9FC86C163C4BAD0092F49C /* RobotFightTests-Info.plist */,
+				9D9FC86D163C4BAD0092F49C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9D9FC83B163C4BAD0092F49C /* RobotFight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D9FC875163C4BAD0092F49C /* Build configuration list for PBXNativeTarget "RobotFight" */;
+			buildPhases = (
+				9D9FC838163C4BAD0092F49C /* Sources */,
+				9D9FC839163C4BAD0092F49C /* Frameworks */,
+				9D9FC83A163C4BAD0092F49C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RobotFight;
+			productName = RobotFight;
+			productReference = 9D9FC83C163C4BAD0092F49C /* RobotFight.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9D9FC862163C4BAD0092F49C /* RobotFightTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D9FC878163C4BAD0092F49C /* Build configuration list for PBXNativeTarget "RobotFightTests" */;
+			buildPhases = (
+				9D9FC85E163C4BAD0092F49C /* Sources */,
+				9D9FC85F163C4BAD0092F49C /* Frameworks */,
+				9D9FC860163C4BAD0092F49C /* Resources */,
+				9D9FC861163C4BAD0092F49C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9D9FC869163C4BAD0092F49C /* PBXTargetDependency */,
+			);
+			name = RobotFightTests;
+			productName = RobotFightTests;
+			productReference = 9D9FC863163C4BAD0092F49C /* RobotFightTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9D9FC833163C4BAD0092F49C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = RobotFight;
+			};
+			buildConfigurationList = 9D9FC836163C4BAD0092F49C /* Build configuration list for PBXProject "RobotFight" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9D9FC831163C4BAD0092F49C;
+			productRefGroup = 9D9FC83D163C4BAD0092F49C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9D9FC83B163C4BAD0092F49C /* RobotFight */,
+				9D9FC862163C4BAD0092F49C /* RobotFightTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9D9FC83A163C4BAD0092F49C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC84B163C4BAD0092F49C /* InfoPlist.strings in Resources */,
+				9D9FC853163C4BAD0092F49C /* Default.png in Resources */,
+				9D9FC855163C4BAD0092F49C /* Default@2x.png in Resources */,
+				9D9FC857163C4BAD0092F49C /* Default-568h@2x.png in Resources */,
+				9D9FC85D163C4BAD0092F49C /* ViewController.xib in Resources */,
+				9D9FC883163C67B00092F49C /* SocialNetwork.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D9FC860163C4BAD0092F49C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC86F163C4BAD0092F49C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9D9FC861163C4BAD0092F49C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9D9FC838163C4BAD0092F49C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC84D163C4BAD0092F49C /* main.m in Sources */,
+				9D9FC851163C4BAD0092F49C /* AppDelegate.m in Sources */,
+				9D9FC85A163C4BAD0092F49C /* ViewController.m in Sources */,
+				9D9FC882163C67B00092F49C /* SocialNetwork.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D9FC85E163C4BAD0092F49C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FC872163C4BAD0092F49C /* RobotFightTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9D9FC869163C4BAD0092F49C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D9FC83B163C4BAD0092F49C /* RobotFight */;
+			targetProxy = 9D9FC868163C4BAD0092F49C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9D9FC849163C4BAD0092F49C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D9FC84A163C4BAD0092F49C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9D9FC85B163C4BAD0092F49C /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D9FC85C163C4BAD0092F49C /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+		9D9FC86D163C4BAD0092F49C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D9FC86E163C4BAD0092F49C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9D9FC873163C4BAD0092F49C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		9D9FC874163C4BAD0092F49C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9D9FC876163C4BAD0092F49C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
+				INFOPLIST_FILE = "RobotFight/RobotFight-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9D9FC877163C4BAD0092F49C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
+				INFOPLIST_FILE = "RobotFight/RobotFight-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		9D9FC879163C4BAD0092F49C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RobotFight.app/RobotFight";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
+				INFOPLIST_FILE = "RobotFightTests/RobotFightTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		9D9FC87A163C4BAD0092F49C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RobotFight.app/RobotFight";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
+				INFOPLIST_FILE = "RobotFightTests/RobotFightTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9D9FC836163C4BAD0092F49C /* Build configuration list for PBXProject "RobotFight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D9FC873163C4BAD0092F49C /* Debug */,
+				9D9FC874163C4BAD0092F49C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9D9FC875163C4BAD0092F49C /* Build configuration list for PBXNativeTarget "RobotFight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D9FC876163C4BAD0092F49C /* Debug */,
+				9D9FC877163C4BAD0092F49C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9D9FC878163C4BAD0092F49C /* Build configuration list for PBXNativeTarget "RobotFightTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D9FC879163C4BAD0092F49C /* Debug */,
+				9D9FC87A163C4BAD0092F49C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9D9FC833163C4BAD0092F49C /* Project object */;
+}
