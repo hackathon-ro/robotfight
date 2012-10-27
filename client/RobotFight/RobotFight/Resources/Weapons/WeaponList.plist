@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>weapon1Name</key>
+	<string>Potato</string>
+	<key>weapon1ID</key>
+	<string>1</string>
+	<key>weapon1Damage</key>
+	<string>3</string>
+	<key>weapon1Image</key>
+	<string>potato.png</string>
+	<key>weapon1Range</key>
+	<string>3</string>
+	<key>weapon2Name</key>
+	<string>Grenade</string>
+	<key>weapon2ID</key>
+	<string>2</string>
+	<key>weapon2Damage</key>
+	<string>10</string>
+	<key>weapon2Image</key>
+	<string>grenade.png</string>
+	<key>weapon2Range</key>
+	<string>15</string>
+	<key>weapon3Name</key>
+	<string>Rock</string>
+	<key>weapon3ID</key>
+	<string>3</string>
+	<key>weapon3Damage</key>
+	<string>2</string>
+	<key>weapon3Image</key>
+	<string>rock.png</string>
+	<key>weapon3Range</key>
+	<string>2</string>
+	<key>nrOfWeapons</key>
+	<string>3</string>
+</dict>
+</plist>
