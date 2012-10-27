@@ -1,6 +1,10 @@
 <?
 class Login extends Page {
     public function run() {
+        if (!array_key_exists('username', $this->data)) {
+            return;
+        }
+
         $db = Database::getInstance();
 
         // Get user.
@@ -48,6 +52,7 @@ class Login extends Page {
         $result = $stm->execute([':user_id' => $user['id']]);
 
         // Create session token.
+        $token = $this->generateToken();
         $a = [
             'user_id' => ':user_id',
             'token' => ':token'
@@ -58,12 +63,12 @@ class Login extends Page {
         $stm = $db->conn->prepare($sql);
         $result = $stm->execute([
             ':user_id' => $user['id'],
-            ':token' => $this->generateToken()
+            ':token' => $token
         ]);
-        $token = $this->generateToken();
 
         // Return data.
         $this->result = [
+            'success' => true,
             'username' => $user['username'],
             'token' => $token,
             'wins' => $user['wins'],

@@ -2,11 +2,25 @@
 abstract class Page {
     protected
         $data = null,
-        $result = null;
+        $result = ['success' => false];
 
     public function __construct() {
         $data = file_get_contents("php://input");
-        $data = json_decode($data);
+
+        // Log request, for debugging purposes.
+        $db = Database::getInstance();
+        $a = [
+            'text' => ':text'
+        ];
+        $sql = "
+            INSERT INTO logs " . Misc::arrayToInsertQuery($a) . "
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([
+            ':text' => $data
+        ]);
+
+        $data = json_decode($data, true);
         if ($data === null) {
             if (count($_POST) > 0) {
                 $data = $_POST;

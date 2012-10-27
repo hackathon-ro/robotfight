@@ -5,7 +5,7 @@ class Router {
     ];
 
     public function route($class) {
-        if (array_key_exists($class, $this->map)) {
+        if ($class != '' && array_key_exists($class, $this->map)) {
             $page = new $this->map[$class];
             $page->run();
             $page->echoResult();
