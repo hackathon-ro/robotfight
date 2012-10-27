@@ -29,6 +29,7 @@
 		5E94E2DA163C6CA70057BBE2 /* grenade.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E94E2D7163C6CA70057BBE2 /* grenade.png */; };
 		5E94E2DB163C6CA70057BBE2 /* rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E94E2D8163C6CA70057BBE2 /* rock.png */; };
 		5E94E2DD163C6CCA0057BBE2 /* WeaponList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E94E2DC163C6CCA0057BBE2 /* WeaponList.plist */; };
+		5ED45088163C7A6A0078B4E0 /* dragArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED45087163C7A6A0078B4E0 /* dragArrow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		5E94E2D7163C6CA70057BBE2 /* grenade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grenade.png; sourceTree = "<group>"; };
 		5E94E2D8163C6CA70057BBE2 /* rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rock.png; sourceTree = "<group>"; };
 		5E94E2DC163C6CCA0057BBE2 /* WeaponList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WeaponList.plist; sourceTree = "<group>"; };
+		5ED45087163C7A6A0078B4E0 /* dragArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragArrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 		5E94E2D4163C6CA70057BBE2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5ED45087163C7A6A0078B4E0 /* dragArrow.png */,
 				5E94E2D5163C6CA70057BBE2 /* Weapons */,
 			);
 			path = Resources;
@@ -287,6 +290,7 @@
 				5E94E2DA163C6CA70057BBE2 /* grenade.png in Resources */,
 				5E94E2DB163C6CA70057BBE2 /* rock.png in Resources */,
 				5E94E2DD163C6CCA0057BBE2 /* WeaponList.plist in Resources */,
+				5ED45088163C7A6A0078B4E0 /* dragArrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +384,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -395,6 +400,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -404,6 +410,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -413,6 +420,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -421,10 +429,12 @@
 		5E94E2A3163C4B2E0057BBE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
 				INFOPLIST_FILE = "RobotFight/RobotFight-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -432,10 +442,12 @@
 		5E94E2A4163C4B2E0057BBE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RobotFight/RobotFight-Prefix.pch";
 				INFOPLIST_FILE = "RobotFight/RobotFight-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -493,6 +505,7 @@
 				5E94E2A4163C4B2E0057BBE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5E94E2A5163C4B2E0057BBE2 /* Build configuration list for PBXNativeTarget "RobotFightTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +514,7 @@
 				5E94E2A7163C4B2E0057BBE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

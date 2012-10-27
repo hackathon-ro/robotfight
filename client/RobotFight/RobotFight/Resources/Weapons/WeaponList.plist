@@ -32,7 +32,5 @@
 	<string>rock.png</string>
 	<key>weapon3Range</key>
 	<string>2</string>
-	<key>nrOfWeapons</key>
-	<string>3</string>
 </dict>
 </plist>
