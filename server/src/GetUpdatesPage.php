@@ -46,8 +46,8 @@ class GetUpdatesPage extends Page {
 
         // Hardcoded debugging! So clean!
         if ($this->data['token'] == '74MdYwtfh7ng8Hxd3y2WM8CU') {
-            $updates[] = json_decode('{"action":"match-found","data":{"username":"gigi","lat":10,"long":10,"your-turn":true}}');
-            $updates[] = json_decode('{"action":"hit","data":{"lat": "11", "long": "12", "hp": "50"}}');
+//            $updates[] = json_decode('{"action":"match-found","data":{"username":"gigi","lat":10,"long":10,"your-turn":true}}');
+            $updates[] = json_decode('{"action":"hit","data":{"lat": "11", "long": "12", "hp": "25"}}');
         }
 
         while ($row = $stm->fetch()) {

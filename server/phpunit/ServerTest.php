@@ -17,14 +17,20 @@ class ServerTest extends RequestTestCase {
         $result = $db->conn->exec($sql);
 
         // Initialize player variables.
-        $t1 = [];
-        $t2 = [];
+        $t1 = [
+            'x' => 2,
+            'y' => 1
+        ];
+        $t2 = [
+            'x' => 3,
+            'y' => 3
+        ];
 
         // Login t1.
         $response = $this->postRequest('login', [
             'username' => 'test1',
-            'long' => 20.5,
-            'lat' => 10.5
+            'lat' => $t1['x'],
+            'long' => $t1['y']
         ]);
         $this->assertTrue($response['success'] === true);
         $t1['token'] = $response['token'];
@@ -39,8 +45,8 @@ class ServerTest extends RequestTestCase {
         // Login t2.
         $response = $this->postRequest('login', [
             'username' => 'test2',
-            'long' => 21,
-            'lat' => 15
+            'lat' => $t2['x'],
+            'long' => $t2['y']
         ]);
         $this->assertTrue($response['success'] === true);
         $t2['token'] = $response['token'];
@@ -66,12 +72,34 @@ class ServerTest extends RequestTestCase {
         $this->assertTrue($response['updates'][0]['data']['username'] === 'test2');
         $this->assertTrue($response['updates'][0]['data']['your-turn'] === true);
 
-        // Simulate that t1 hits t2.
+        // Simulate that t1 hits t2 with exact precision.
+        $maxError = 0.0001;
         $response = $this->postRequest('fire', [
             'token' => $t1['token'],
-            'angle' => 60.3,
-            'power' => 12.34
+            'angle' => 63.4349488,
+            'power' => 0.5
         ]);
         $this->assertTrue($response['success'] === true);
+        $this->assertTrue(abs($response['lat'] - $t2['x']) < $maxError);
+        $this->assertTrue(abs($response['long'] - $t2['y']) < $maxError);
+
+        // Simulate that t1 tries to hit again, although it isn't his turn.
+        $response = $this->postRequest('fire', [
+            'token' => $t1['token'],
+            'angle' => 10,
+            'power' => 0.1
+        ]);
+        $this->assertTrue($response['success'] === false);
+
+        // Simulate that t2 hits t1 with awful precision.
+        $minError = 1;
+        $response = $this->postRequest('fire', [
+            'token' => $t2['token'],
+            'angle' => 50,
+            'power' => 0.1
+        ]);
+        $this->assertTrue($response['success'] === true);
+        $this->assertTrue(abs($response['lat'] - $t2['x']) > $minError);
+        $this->assertTrue(abs($response['long'] - $t2['y']) > $minError);
     }
 }

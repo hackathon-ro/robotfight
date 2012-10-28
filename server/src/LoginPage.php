@@ -194,9 +194,26 @@ class LoginPage extends Page {
             //var_dump('found!');
             $match = $stm->fetch();
 
+            // Update the current player.
+            $a = [
+                'state' => UserStates::OPPONENT_TURN,
+                'hp' => 100,
+                'opponent_id' => ':opponent_id'
+            ];
+            $sql = "
+                UPDATE users SET " . Misc::arrayToUpdateQuery($a) . "
+                WHERE
+                    id = :id
+            ";
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                'id' => $user['id'],
+                'opponent_id' => $match['id']
+            ]);
+
             // Push notification for the player that just logged in.
             $pushQueue = PushQueue::getInstance();
-            $pushQueue->add($userId, [
+            $pushQueue->add($user['id'], [
                 'action' => 'found-match',
                 'data' => [
                     'username' => $match['username'],
@@ -206,6 +223,23 @@ class LoginPage extends Page {
                     'long' => $match['long'],
                     'your-turn' => false
                 ]
+            ]);
+
+            // Update the the player that was waiting for a match.
+            $a = [
+                'state' => UserStates::PLAYER_TURN,
+                'hp' => 100,
+                'opponent_id' => ':opponent_id'
+            ];
+            $sql = "
+                UPDATE users SET " . Misc::arrayToUpdateQuery($a) . "
+                WHERE
+                    id = :id
+            ";
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                'id' => $match['id'],
+                'opponent_id' => $user['id']
             ]);
 
             // Push notification for the player that was waiting for a match.
