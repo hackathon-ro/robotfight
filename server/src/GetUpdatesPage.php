@@ -12,8 +12,10 @@ class GetUpdatesPage extends Page {
         // Get user info from token.
         $sql = "
             SELECT
-                user_id
+                user_id,
+                users.opponent_id
             FROM sessions
+            JOIN users ON (users.id = sessions.user_id)
             WHERE token = :token
         ";
         $stm = $db->conn->prepare($sql);
@@ -38,6 +40,53 @@ class GetUpdatesPage extends Page {
         ]);
 
 //        var_dump($user);
+
+        // Check if opponent timed out.
+        $sql = "
+            SELECT
+                NULL
+            FROM users
+            WHERE
+                id = :id AND
+                last_ping < NOW() - INTERVAL '" . Misc::TIMEOUT . " seconds'
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([
+            ':id' => $user['opponent_id']
+        ]);
+        if ($stm->rowCount() == 1) {
+            // Update opponent.
+            $a = [
+                'losses' => 'losses + 1',
+                'state' => UserStates::DISCONNECTED
+            ];
+            $sql = "
+                UPDATE users
+                SET " . Misc::arrayToUpdateQuery($a) . "
+                WHERE
+                    id = :id
+            ";
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                ':id' => $user['opponent_id']
+            ]);
+
+            // Update current player.
+            $a = [
+                'wins' => 'wins + 1',
+                'state' => UserStates::DISCONNECTED
+            ];
+            $sql = "
+                UPDATE users
+                SET " . Misc::arrayToUpdateQuery($a) . "
+                WHERE
+                    id = :id
+            ";
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                ':id' => $user['id']
+            ]);
+        }
 
         // Get updates while removing them for the database.
         $a = [

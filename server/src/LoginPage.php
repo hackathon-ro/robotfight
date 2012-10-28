@@ -200,7 +200,7 @@ class LoginPage extends Page {
             FROM users
             WHERE
                 state = " . UserStates::AWAITING_MATCH . " AND
-                last_ping > NOW() - INTERVAL '15 seconds' AND
+                last_ping > NOW() - INTERVAL '" . Misc::TIMEOUT . " seconds' AND
                 id != :user_id
             ORDER BY match_making_began_on ASC
             LIMIT 1
