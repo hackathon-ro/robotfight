@@ -1,7 +1,9 @@
 <?
 class Router {
     private $map = [
-        'login' => 'Login'
+        'login' => 'LoginPage',
+        'fire' => 'FirePage',
+        'get-updates' => 'GetUpdatesPage'
     ];
 
     public function route($class) {

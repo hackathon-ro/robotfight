@@ -1,4 +1,7 @@
 <?
+// Set timezone, necessary for Apple Push Notification Service
+date_default_timezone_set('Europe/Bucharest');
+
 // Set our autoloader.
 spl_autoload_register(function ($class) {
     include '../src/' . $class . '.php';
