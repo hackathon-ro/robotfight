@@ -1,55 +1,86 @@
 //
-//  ViewController.m
+//  PlayScene.m
 //  RobotFight
 //
 //  Created by George Jingoiu on 10/27/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "PlayScene.h"
 #import "AppDelegate.h"
 #import "Defines.h"
+#import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Weapon.h"
 
-#define kTagInventoryView 1000
+#define kTagInventoryView   1000
+#define kTagSetAngleView    2000
+#define kDefaultHeading     -100 //virtual initial heading. Used in order to know when to update the heading first time
 
 
-@implementation ViewController
+@implementation PlayScene
 
 @synthesize mapView;
 @synthesize imageView;
+@synthesize diractionalArrow;
+@synthesize locationManager;
 
+//******************************************************************************************************************************
+- (id) initWithPlayer1:(Player *) _player1 Player2:(Player *) _player2
+{
+    if((self = [super init]))
+    {
+        player1 = _player1;
+        player2 = _player2;
+    }
+
+    return self;
+}
+//******************************************************************************************************************************
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSLog(@"player1 = %@" , player1);
+    NSLog(@"player2 = %@" , player2);
+    
+    [self.player1HP     setAlpha:0];
+    [self.player2HP     setAlpha:0];
+    [self.player1Label  setAlpha:0];
+    [self.player2Label  setAlpha:0];
+}
 //******************************************************************************************************************************
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
+    initialHeading = kDefaultHeading;
     currentWeapon = 1;
-    
-    CLLocationCoordinate2D coord1;
-    CLLocationCoordinate2D coord2;
-    
-    coord1 = CLLocationCoordinate2DMake(48.137500, 11.577590);
-    coord2 = CLLocationCoordinate2DMake(39.923219, -5.273438);
-    
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((coord1.latitude + coord2.latitude) / 2.0, (coord1.longitude + coord2.longitude) / 2.0 );
-    NSLog(@"center = %@" , NSStringFromCGPoint(CGPointMake(center.latitude, center.longitude)));
-    MKCoordinateSpan span = MKCoordinateSpanMake(abs(coord1.latitude - coord2.latitude), abs(coord1.longitude - coord2.longitude));
-    
+
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((player1.coordinates.latitude + player2.coordinates.latitude) / 2.0, (player1.coordinates.longitude + player2.coordinates.longitude) / 2.0 );
+    MKCoordinateSpan span = MKCoordinateSpanMake(abs(player1.coordinates.latitude - player2.coordinates.latitude), abs(player1.coordinates.longitude - player2.coordinates.longitude));
+
 //    span.longitudeDelta += 0.09;
 //    span.latitudeDelta  += 0.09;
 
     [mapView setRegion:MKCoordinateRegionMake(center, span)];
 }
 //******************************************************************************************************************************
-- (void) mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
+    [self performSelector:@selector(makeScreenShot) withObject:nil afterDelay:5];
+}
+//******************************************************************************************************************************
+- (void) makeScreenShot
+{
+    if(mapLoaded)
+        return;
+
     AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
+
     if([appDelegate getScreenshot])
     {
-        [self performSelector:@selector(screenshotSucceeded) withObject:nil afterDelay:0];
+        [self screenshotSucceeded];
     }
     else
     {
@@ -60,21 +91,80 @@
 //******************************************************************************************************************************
 - (void) screenshotSucceeded
 {
-    if(mapLoaded)
-        return;
-    
     mapLoaded = TRUE;
-    [imageView setUserInteractionEnabled:TRUE];
+
+    [self.diractionalArrow setHidden:FALSE];
+
+    [imageView  setUserInteractionEnabled:TRUE];
     [imageView  setImage:[UIImage imageWithContentsOfFile:[AppDelegate libraryDataFilePath:mapScreenshotFilename]]];
     [imageView  setHidden:FALSE];
     [mapView    removeFromSuperview];
 
     [self loadItems];
+    [self loadPlayers];
+    
+    self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+	
+    //verificam daca avem compass
+	if ([CLLocationManager headingAvailable] == NO)
+    {
+        self.locationManager = nil;
+        UIAlertView *noCompassAlert = [[UIAlertView alloc] initWithTitle:@"No Compass!" message:@"This device does not have the ability to measure magnetic fields." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [noCompassAlert show];
+        [noCompassAlert release];
+	}
+    else
+    {
+        locationManager.headingFilter = kCLHeadingFilterNone;
+        locationManager.delegate = self;
+        [locationManager startUpdatingHeading];
+    }
 }
 //******************************************************************************************************************************
 - (void) screenshotFailed
 {
     
+}
+//******************************************************************************************************************************
+- (void) loadPlayers
+{
+    CGPoint annPoint1 = [self.mapView convertCoordinate:player1.coordinates toPointToView:self.imageView];
+    CGPoint annPoint2 = [self.mapView convertCoordinate:player2.coordinates toPointToView:self.imageView];
+    
+    UIButton *player1Button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 65)] autorelease];
+    [player1Button setCenter:annPoint1];
+//    [player1Button setBackgroundColor:[UIColor redColor]];
+    [imageView addSubview:player1Button];
+    
+    UIButton *player2Button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 65)] autorelease];
+    [player2Button setCenter:annPoint2];
+//    [player2Button setBackgroundColor:[UIColor blueColor]];
+    [imageView addSubview:player2Button];
+    
+    
+    AsyncImageView *imgView1 = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, player1Button.frame.size.width, player1Button.frame.size.height)] autorelease];
+    [imgView1 loadImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@" , imageGeneratorServer , player1.name]]];
+    [player1Button addSubview:imgView1];
+    
+    AsyncImageView *imgView2 = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, player2Button.frame.size.width, player2Button.frame.size.height)] autorelease];
+    [imgView2 loadImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@" , imageGeneratorServer , player2.name]]];
+    [player2Button addSubview:imgView2];
+    
+    [self.player1HP setProgress:player1.hp];
+    [self.player2HP setProgress:player2.hp];
+    
+    [self.player1Label setText:player1.name];
+    [self.player2Label setText:player2.name];
+    
+    [UIView transitionWithView:self.view duration:1.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self.player1Label  setAlpha:1];
+        [self.player2Label  setAlpha:1];
+        [self.player1HP     setAlpha:1];
+        [self.player2HP     setAlpha:1];
+    } completion:nil];
+    
+//    [player1Button setCenter:CGPointMake(x1, y1)];
+//    [player2Button setCenter:CGPointMake(x2, y2)];
 }
 //******************************************************************************************************************************
 - (void) loadItems
@@ -134,7 +224,8 @@
     }
 
     UIButton *defaultWeapon = (UIButton *)[inventoryView viewWithTag:currentWeapon];
-    [self performSelector:@selector(onWeaponSelect:) withObject:defaultWeapon afterDelay:0];
+    [self onWeaponSelect:defaultWeapon];
+    [self onWeaponSelect:defaultWeapon];
     
     [UIView transitionWithView:self.view duration:2 options:UIViewAnimationCurveEaseOut animations:^
      {
@@ -174,17 +265,13 @@
                 weapon.layer.borderColor = [UIColor darkGrayColor].CGColor;
         }
     }
+    
+    [self showInventory:sender];
 }
 //******************************************************************************************************************************
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     CGPoint location = [touch locationInView:gestureRecognizer.view];
-
-//    UISwipeGestureRecognizer *swipeGesture = (UISwipeGestureRecognizer *) gestureRecognizer;
-//    if(inventoryIsVisible)
-//        [swipeGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
-//    else
-//        [swipeGesture setDirection:UISwipeGestureRecognizerDirectionRight];
 
     if(location.x > 200)
         return FALSE;
@@ -199,7 +286,7 @@
         NSLog(@"error. showInventory was called by a %@" , NSStringFromClass([sender class]));
         return;
     }
-    
+
     UIView *inventoryView = [imageView viewWithTag:kTagInventoryView];
 
     if(!inventoryView)
@@ -207,9 +294,9 @@
         NSLog(@"no inventory view. Critical error");
         return;
     }
-    
+
     inventoryIsVisible = !inventoryIsVisible;
-    
+
     for(UISwipeGestureRecognizer *gesture in self.view.gestureRecognizers)
     {
         if([gesture isMemberOfClass:[UISwipeGestureRecognizer class]])
@@ -235,10 +322,84 @@
      }completion:nil];
 }
 //******************************************************************************************************************************
+- (void) locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)heading 
+{
+    CLLocationDirection direction = heading.trueHeading;
+    
+    if(initialHeading == kDefaultHeading)
+    {
+        initialHeading = heading.trueHeading;
+        [self showSetAngleView];
+    }
+    else
+    {
+        if(direction > initialHeading)
+            direction -= initialHeading;
+        else
+            direction = -(initialHeading - direction);
+        [self.diractionalArrow setTransform:CGAffineTransformMakeRotation(RADIANS(direction))];
+    }
+}
+//******************************************************************************************************************************
+// This delegate method is invoked when the location managed encounters an error condition.
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error 
+{
+    if ([error code] == kCLErrorDenied) 
+    {
+        [manager stopUpdatingHeading];// This error indicates that the user has denied the application's request to use location services.
+    } else if ([error code] == kCLErrorHeadingFailure) 
+    {
+        // This error indicates that the heading could not be determined, most likely because of strong magnetic interference.
+    }
+}
+//******************************************************************************************************************************
+- (void) showSetAngleView
+{
+    UIButton *setAngle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [setAngle setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 150)];
+    [setAngle addTarget:self action:@selector(onDirectionSet:) forControlEvents:UIControlEventTouchUpInside];
+    [setAngle setBackgroundColor:[UIColor darkGrayColor]];
+    [setAngle layer].borderColor = [UIColor whiteColor].CGColor;
+    [setAngle layer].borderWidth = 2;
+    [setAngle layer].masksToBounds = TRUE;
+    [setAngle layer].cornerRadius = 130;
+    [setAngle setTitle:@"Set angle" forState:UIControlStateNormal];
+    [setAngle setTag:kTagSetAngleView];
+    [self.view addSubview:setAngle];
+
+    [UIView transitionWithView:self.view duration:1 options:UIViewAnimationCurveEaseOut animations:^
+     {
+         CGRect frame = setAngle.frame;
+         frame.origin.y = self.view.frame.size.height - setAngle.frame.size.height/2;
+         [setAngle setFrame:frame];
+     }completion:nil];
+}
+//******************************************************************************************************************************
+- (void) onDirectionSet:(id) sender
+{
+    [locationManager stopUpdatingHeading];
+    
+    UIView *setAngle = [self.view viewWithTag:kTagSetAngleView];
+    if(setAngle)
+    {
+        [UIView transitionWithView:self.view duration:1 options:UIViewAnimationCurveEaseOut animations:^
+         {
+             CGRect frame = setAngle.frame;
+             frame.origin.y = self.view.frame.size.height;
+             [setAngle setFrame:frame];
+         }completion:nil];
+    }
+}
+//******************************************************************************************************************************
 - (void)viewDidUnload
 {
     [self setMapView:nil];
     [self setImageView:nil];
+    [self setDiractionalArrow:nil];
+    [self setPlayer1Label:nil];
+    [self setPlayer2Label:nil];
+    [self setPlayer1HP:nil];
+    [self setPlayer2HP:nil];
     [super viewDidUnload];
 }
 //******************************************************************************************************************************
@@ -249,9 +410,14 @@
 //******************************************************************************************************************************
 - (void)dealloc 
 {
-    [mapView    release];
-    [imageView  release];
-    [super      dealloc];
+    [mapView            release];
+    [imageView          release];
+    [diractionalArrow   release];
+    [_player1Label release];
+    [_player2Label release];
+    [_player1HP release];
+    [_player2HP release];
+    [super              dealloc];
 }
 //******************************************************************************************************************************
 @end

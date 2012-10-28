@@ -10,6 +10,7 @@
 #import "Defines.h"
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Player.h"
 
 @implementation AppDelegate
 
@@ -20,10 +21,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     userName = @"George";
-//    [userName retain];
+
+    Player *player1 = [[[Player alloc] init] retain];
+    Player *player2 = [[[Player alloc] init] retain];
+    
+    player1.name        = @"George";
+    player1.hp          = 100;
+    player1.coordinates = CLLocationCoordinate2DMake(48.722861, 2.373047); //paris
+    player1.score       = 0;
+    player1.totalGames  = 0;
+    player1.wins        = 0;
+    
+    player2.name        = @"Deea";
+    player2.hp          = 100;
+    player2.coordinates = CLLocationCoordinate2DMake(38.482835, -9.096680); //lisabona
+    player2.score       = 0;
+    player2.totalGames  = 0;
+    player2.wins        = 0;
+    
+    //decide enter screen
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
+    self.viewController = [[UINavigationController alloc] initWithRootViewController:[[[ViewController alloc] init] autorelease]];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;

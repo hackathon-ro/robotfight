@@ -10,4 +10,6 @@
 #define imageGeneratorServer @"http://robohash.org/"
 #define mapScreenshotFilename   @"map.png"
 
+#define RADIANS(__X__) __X__ * M_PI / 180
+
 NSString *userName;
