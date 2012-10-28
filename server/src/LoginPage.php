@@ -27,7 +27,9 @@ class LoginPage extends Page {
                 wins,
                 losses,
                 state,
-                opponent_id
+                opponent_id,
+                lat,
+                long
         ";
         $stm = $db->conn->prepare($sql);
         $result = $stm->execute([
@@ -43,7 +45,9 @@ class LoginPage extends Page {
             $a = [
                 'username' => ':username',
                 'long' => ':long',
-                'lat' => ':lat'
+                'lat' => ':lat',
+                'state' => UserStates::AWAITING_MATCH,
+                'match_making_began_on' => 'NOW()'
             ];
             $sql = "
                 INSERT INTO users " . Misc::arrayToInsertQuery($a) . "
@@ -54,6 +58,8 @@ class LoginPage extends Page {
                     losses,
                     state,
                     opponent_id
+                    lat,
+                    long
             ";
             $stm = $db->conn->prepare($sql);
             $result = $stm->execute([
@@ -65,39 +71,39 @@ class LoginPage extends Page {
         }
         else {
             $user = $stm->fetch();
+
+            // Delete previous updates.
+            $sql = "
+                DELETE FROM updates
+                WHERE user_id = :user_id
+            ";
+                $stm = $db->conn->prepare($sql);
+                $result = $stm->execute([
+                    ':user_id' => $user['id']
+                ]);
         }
 
-        // Reset user state if necessary.
-        if ($user['state'] != 0) {
-            $a = [
-                'state' => 0
-            ];
-            $sql = "
-                UPDATE users
-                SET " . Misc::arrayToUpdateQuery($a) . "
-                WHERE id = :id
-            ";
-            $stm = $db->conn->prepare($sql);
-            $result = $stm->execute([':id' => $user['id']]);
+        // Reset user state for users that were playing with this user.
+        $sql = "
+            SELECT
+                id
+            FROM users
+            WHERE opponent_id = :opponent_id
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([
+            ':opponent_id' => $user['id']
+        ]);
+        while ($row = $stm->fetch()) {
+            // Notify that the match has ended.
+            $pushQueue = PushQueue::getInstance();
+            $pushQueue->add('match-ended', []);
 
-            // End match for the opponent.
-            if ($user['opponent_id'] === null) {
-                $a = [
-                    'state' => 0,
-                    'opponent_id' => null
-                ];
-                $sql = "
-                    UPDATE users
-                    SET " . Misc::arrayToUpdateQuery($a) . "
-                    WHERE id = :id
-                ";
-                $stm = $db->conn->prepare($sql);
-                $result = $stm->execute([':id' => $user['opponent_id']]);
+            $this->startMatchMaking($row['id']);
+        }
 
-                $pushQueue = PushQueue::getInstance();
-                $pushQueue->add('match-ended', []);
-            }
-        };
+        // Do match-making.
+        $this->startMatchMaking($user['id']);
 
         // Delete other sessions for this user.
         $sql = "
@@ -136,5 +142,83 @@ class LoginPage extends Page {
 
     private function generateToken() {
         return Misc::generateAlphanumericString(24);
+    }
+
+    private function startMatchMaking($userId) {
+        $db = Database::getInstance();
+
+        // Update user info.
+        $a = [
+            'state' => UserStates::AWAITING_MATCH,
+            'match_making_began_on' => 'NOW()',
+            'opponent_id' => 'NULL'
+        ];
+        $sql = "
+            UPDATE users
+            SET " . Misc::arrayToUpdateQuery($a) . "
+            WHERE id = :id
+            RETURNING
+                id,
+                username,
+                wins,
+                losses,
+                lat,
+                long
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([':id' => $userId]);
+        $user = $stm->fetch();
+
+        // Do match-making if another opponent is available.
+        $sql = "
+            SELECT
+                id,
+                username,
+                wins,
+                losses,
+                lat,
+                long
+            FROM users
+            WHERE
+                state = " . UserStates::AWAITING_MATCH . " AND
+                match_making_began_on > NOW() - INTERVAL '1000 seconds' AND
+                id != :user_id
+            ORDER BY match_making_began_on ASC
+            LIMIT 1
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([
+            'user_id' => $user['id']
+        ]);
+        if ($stm->rowCount() === 1) {
+            //var_dump('found!');
+            $match = $stm->fetch();
+
+            // Push notification for the player that just logged in.
+            $pushQueue = PushQueue::getInstance();
+            $pushQueue->add($userId, [
+                'action' => 'found-match',
+                'data' => [
+                    'username' => $match['username'],
+                    'wins' => $match['wins'],
+                    'losses' => $match['losses'],
+                    'lat' => $match['lat'],
+                    'long' => $match['long']
+                ]
+            ]);
+
+            // Push notification for the player that was waiting for a match.
+            $pushQueue = PushQueue::getInstance();
+            $pushQueue->add($match['id'], [
+                'action' => 'found-match',
+                'data' => [
+                    'username' => $user['username'],
+                    'wins' => $user['wins'],
+                    'losses' => $user['losses'],
+                    'lat' => $user['lat'],
+                    'long' => $user['long']
+                ]
+            ]);
+        }
     }
 }

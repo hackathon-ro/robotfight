@@ -3,6 +3,7 @@ class PushQueue {
     private static $instance;
 
     public function add($userId, $data) {
+//        var_dump($data);
         $db = Database::getInstance();
 
         $a = [
@@ -10,7 +11,7 @@ class PushQueue {
             'data' => ':data'
         ];
         $sql = "
-            INSERT INTO users " . Misc::arrayToInsertQuery($a) . "
+            INSERT INTO updates " . Misc::arrayToInsertQuery($a) . "
         ";
         $stm = $db->conn->prepare($sql);
         $result = $stm->execute([
