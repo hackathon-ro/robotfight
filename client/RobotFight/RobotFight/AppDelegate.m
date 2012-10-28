@@ -11,7 +11,7 @@
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Player.h"
-
+#import "PlayScene.h"
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -21,37 +21,40 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     userName = @"George";
+    winSize = [UIScreen mainScreen].bounds.size;
+    scaleFactor = [UIScreen mainScreen].scale;
+    
+//    Player *player1 = [[[Player alloc] init] retain];
+//    Player *player2 = [[[Player alloc] init] retain];
+//    
+//    player1.name        = @"George";
+//    player1.hp          = 100;
+//    player1.coordinates = CLLocationCoordinate2DMake(48.722861, 2.373047); //paris
+//    player1.score       = 0;
+//    player1.totalGames  = 0;
+//    player1.wins        = 0;
+//    player1.ID          = 1;
+//    
+//    player2.name        = @"Deea";
+//    player2.hp          = 100;
+//    player2.coordinates = CLLocationCoordinate2DMake(38.482835, -9.096680); //lisabona
+//    player2.score       = 0;
+//    player2.totalGames  = 0;
+//    player2.wins        = 0;
+//    player2.ID          = 4;
 
-    Player *player1 = [[[Player alloc] init] retain];
-    Player *player2 = [[[Player alloc] init] retain];
-    
-    player1.name        = @"George";
-    player1.hp          = 100;
-    player1.coordinates = CLLocationCoordinate2DMake(48.722861, 2.373047); //paris
-    player1.score       = 0;
-    player1.totalGames  = 0;
-    player1.wins        = 0;
-    
-    player2.name        = @"Deea";
-    player2.hp          = 100;
-    player2.coordinates = CLLocationCoordinate2DMake(38.482835, -9.096680); //lisabona
-    player2.score       = 0;
-    player2.totalGames  = 0;
-    player2.wins        = 0;
-    
     //decide enter screen
-	
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
+
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.viewController = [[UINavigationController alloc] initWithRootViewController:[[[ViewController alloc] init] autorelease]];
+    [self.viewController setNavigationBarHidden:TRUE];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;
 }
 //******************************************************************************************************************************
 + (NSString *) libraryDataFilePath:(NSString*) filename
-{    
+{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:filename];

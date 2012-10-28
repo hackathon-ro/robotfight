@@ -10,7 +10,7 @@
 
 @implementation Player
 
-@synthesize name , score , totalGames , wins , coordinates , hp;
+@synthesize name , score , totalGames , wins , coordinates , hp , ID;
 
 //******************************************************************************************************************************
 - (id) init
@@ -22,13 +22,14 @@
         totalGames  = 0;
         wins        = 0;
         hp          = 0;
+        ID          = 0;
     }
     return self;
 }
 //******************************************************************************************************************************
 - (NSString *) description
 {
-    return [NSString stringWithFormat:@"Name:%@    Coordinates:%4.fx%.4f   hp:%d" , self.name , self.coordinates.latitude , self.coordinates.longitude , self.hp];
+    return [NSString stringWithFormat:@"ID:%d   Name:%@    Coordinates:%.4f x %.4f   hp:%d" , self.ID , self.name , self.coordinates.latitude , self.coordinates.longitude , self.hp];
 }
 //******************************************************************************************************************************
 - (void) dealloc

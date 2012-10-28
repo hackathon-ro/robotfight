@@ -29,6 +29,8 @@
 		5E12CD4B163CE62C00344840 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E12CD4A163CE62C00344840 /* Social.framework */; };
 		5E12CD4D163CE63200344840 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E12CD4C163CE63200344840 /* SystemConfiguration.framework */; };
 		5E12CD50163CE67400344840 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E12CD4F163CE67400344840 /* ViewController.m */; };
+		5E12CD5A163CF63600344840 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E12CD59163CF63600344840 /* CoreMotion.framework */; };
+		5E12CD5F163D1F5100344840 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E12CD5E163D1F5100344840 /* PopoverView.m */; };
 		5E94E274163C4B2E0057BBE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E94E273163C4B2E0057BBE2 /* UIKit.framework */; };
 		5E94E276163C4B2E0057BBE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E94E275163C4B2E0057BBE2 /* Foundation.framework */; };
 		5E94E278163C4B2E0057BBE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E94E277163C4B2E0057BBE2 /* CoreGraphics.framework */; };
@@ -93,6 +95,9 @@
 		5E12CD4C163CE63200344840 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5E12CD4E163CE67400344840 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5E12CD4F163CE67400344840 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5E12CD59163CF63600344840 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		5E12CD5D163D1F5100344840 /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
+		5E12CD5E163D1F5100344840 /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
 		5E94E26F163C4B2E0057BBE2 /* RobotFight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotFight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E94E273163C4B2E0057BBE2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E94E275163C4B2E0057BBE2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -134,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E12CD5A163CF63600344840 /* CoreMotion.framework in Frameworks */,
 				5E12CD4D163CE63200344840 /* SystemConfiguration.framework in Frameworks */,
 				5E12CD4B163CE62C00344840 /* Social.framework in Frameworks */,
 				5E94E2D0163C58C90057BBE2 /* QuartzCore.framework in Frameworks */,
@@ -180,6 +186,15 @@
 			path = Popover;
 			sourceTree = "<group>";
 		};
+		5E12CD5C163D1F5100344840 /* PopoverView */ = {
+			isa = PBXGroup;
+			children = (
+				5E12CD5D163D1F5100344840 /* PopoverView.h */,
+				5E12CD5E163D1F5100344840 /* PopoverView.m */,
+			);
+			path = PopoverView;
+			sourceTree = "<group>";
+		};
 		5E94E264163C4B2E0057BBE2 = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +217,7 @@
 		5E94E272163C4B2E0057BBE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5E12CD59163CF63600344840 /* CoreMotion.framework */,
 				5E12CD4C163CE63200344840 /* SystemConfiguration.framework */,
 				5E12CD4A163CE62C00344840 /* Social.framework */,
 				5E94E2CF163C58C90057BBE2 /* QuartzCore.framework */,
@@ -236,6 +252,7 @@
 				5E12CD05163CE45D00344840 /* SocialNetwork.h */,
 				5E12CD06163CE45D00344840 /* SocialNetwork.m */,
 				5E12CD07163CE45D00344840 /* SocialNetwork.xib */,
+				5E12CD5C163D1F5100344840 /* PopoverView */,
 				5E94E2D4163C6CA70057BBE2 /* Resources */,
 				5E94E2AC163C51F50057BBE2 /* AsyncImage */,
 				5E94E27A163C4B2E0057BBE2 /* Supporting Files */,
@@ -442,6 +459,7 @@
 				5E12CD04163CE45400344840 /* Reachability.m in Sources */,
 				5E12CD0A163CE45D00344840 /* SocialNetwork.m in Sources */,
 				5E12CD50163CE67400344840 /* ViewController.m in Sources */,
+				5E12CD5F163D1F5100344840 /* PopoverView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

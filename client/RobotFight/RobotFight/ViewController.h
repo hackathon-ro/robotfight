@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate , NSURLConnectionDataDelegate>
+@interface ViewController : UIViewController <UITextFieldDelegate , NSURLConnectionDataDelegate , CLLocationManagerDelegate>
 {
 	NSMutableData *serverInfo;
 }
 @property (retain, nonatomic) IBOutlet UITextField *textField;
+@property (retain, nonatomic) IBOutlet UIButton *buttonGetStarted;
 
 - (IBAction)GetStarted:(id)sender;
+- (void) SendInformation;
+
 
 @end

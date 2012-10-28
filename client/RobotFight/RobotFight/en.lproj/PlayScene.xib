@@ -69,7 +69,6 @@
 						<string key="NSFrame">{{83, 104}, {154, 272}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -143,8 +142,12 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIProgress">0.5</float>
+						<float key="IBUIProgress">1</float>
 						<int key="IBUIProgressViewStyle">1</int>
+						<object class="NSColor" key="IBUIProgressTintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwLjY5NzU0OTE0MzEgMAA</bytes>
+						</object>
 					</object>
 					<object class="IBUIProgressView" id="158403657">
 						<reference key="NSNextResponder" ref="774585933"/>
@@ -158,6 +161,10 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<float key="IBUIProgress">0.5</float>
 						<int key="IBUIProgressViewStyle">1</int>
+						<object class="NSColor" key="IBUIProgressTintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwLjY5NzU0OTE0MzEgMAA</bytes>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 480}</string>
