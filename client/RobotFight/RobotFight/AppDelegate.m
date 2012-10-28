@@ -40,7 +40,9 @@
     player2.wins        = 0;
     
     //decide enter screen
-    
+	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.viewController = [[UINavigationController alloc] initWithRootViewController:[[[ViewController alloc] init] autorelease]];
     self.window.rootViewController = self.viewController;
