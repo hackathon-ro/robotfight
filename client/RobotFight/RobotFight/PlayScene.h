@@ -11,11 +11,13 @@
 #import <CoreMotion/CoreMotion.h>
 #import "Player.h"
 
-@interface PlayScene : UIViewController <MKMapViewDelegate , UIGestureRecognizerDelegate , CLLocationManagerDelegate>
+@interface PlayScene : UIViewController <MKMapViewDelegate , UIGestureRecognizerDelegate , CLLocationManagerDelegate , NSURLConnectionDataDelegate>
 {
     BOOL inventoryIsVisible;
     BOOL mapLoaded;
     int currentWeapon;
+    
+    NSMutableData *mutableData;
 
     CLLocationDirection initialHeading;
     CLLocationDirection throwingHeading;
@@ -27,6 +29,7 @@
     Player *player2;
     
     NSTimer *accelerometerTimer;
+    NSTimer *updatesTimer;
     
     CMAcceleration oldAcceleration;
     CGPoint playerLocationInView;

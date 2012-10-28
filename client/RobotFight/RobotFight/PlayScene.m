@@ -48,14 +48,11 @@
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSLog(@"player1 = %@" , player1);
-    NSLog(@"player2 = %@" , player2);
-    
+
     oldAcceleration.x = -100;
     oldAcceleration.y = -100;
     oldAcceleration.z = -100;
-    
+
     [self.player1HP     setAlpha:0];
     [self.player2HP     setAlpha:0];
     [self.player1Label  setAlpha:0];
@@ -76,6 +73,8 @@
     span.latitudeDelta  += 0.06;
 
     [mapView setRegion:MKCoordinateRegionMake(center, span)];
+    
+    updatesTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(getUpdates) userInfo:nil repeats:YES] retain];
 }
 //******************************************************************************************************************************
 - (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView
@@ -107,7 +106,7 @@
     {
         [self setIsTurn:TRUE];
     }
-    
+
     mapLoaded = TRUE;
 
     [imageView  setUserInteractionEnabled:TRUE];
@@ -156,28 +155,85 @@
 		NSLog(@"Error");
 	}
 }
-// ----------------------------------------------------------------------------------------------
+//******************************************************************************************************************************
+- (void) getUpdates
+{
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
+	NSString *userToken = [userDefaults objectForKey:@"token"];
+	NSError  *error     = nil;
+
+	NSDictionary *information   = [NSDictionary dictionaryWithObjectsAndKeys: userToken, @"token", nil];
+	NSData       *jsonData      = [NSJSONSerialization dataWithJSONObject: information options:NSJSONWritingPrettyPrinted error:&error];
+	
+	NSMutableURLRequest *theRequest = [ NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@get-updates" , JSONServer]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:0.5 ];
+
+	[theRequest setHTTPMethod: @"POST"];
+	[theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[theRequest setValue:[NSString stringWithFormat:@"%d" , [jsonData length]] forHTTPHeaderField:@"Content-Length"];
+	[theRequest setHTTPBody:jsonData];
+    
+	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    [theConnection start];
+}
+//******************************************************************************************************************************
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
 	NSLog(@"Data sent to server");
 	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     int statusCode = [httpResponse statusCode];
 	NSLog(@"Status code %d", statusCode);
+    
+    if(mutableData)
+    {
+        [mutableData release];
+        mutableData = nil;
+    }
+    
+    if(!mutableData)
+        mutableData = [[NSMutableData alloc] init];
+    
+    
 }
-// ----------------------------------------------------------------------------------------------
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+//******************************************************************************************************************************
+- (void) connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	NSLog(@"Connection did receive data");
     NSError *error;
 
-//    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-	// getting position from server
-	
-	// animating
-	
-	// updating score
-	
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:mutableData options:kNilOptions error:&error];
+
+	if([json count] == 0)
+	{
+		NSLog(@"Data Set is empty");
+	}
+
+	else
+	{
+		NSArray *updates = [json objectForKey:@"updates"];
+		
+		for(int i = 0; i < [updates count]; i++)
+		{
+			NSDictionary *dictionary = [updates objectAtIndex: i];
+			NSString *act = [dictionary objectForKey:@"action"];
+
+			if([act isEqualToString:@"hit"])
+			{
+				NSDictionary *information = [dictionary objectForKey:@"data"];
+				NSString *hp        = [information objectForKey:@"hp"   ];
+
+				int hpIntegerValue = [hp integerValue];
+                player1.hp = hpIntegerValue;
+				[self updateHPForPlayer:player1];
+			}
+		}
+	}
 }
+//******************************************************************************************************************************
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [mutableData appendData:data];
+}
+//******************************************************************************************************************************
 - (void) goAnimation: (int) x: (int) y
 {
 	NSString     *bundlePath        = [[NSBundle mainBundle] pathForResource:@"WeaponList" ofType:@"plist"];
@@ -381,8 +437,6 @@
 //******************************************************************************************************************************
 - (void) showInventory:(id) sender
 {
-    [self setIsTurn:!isTurn];     //debug
-
     if(!([sender isKindOfClass:[UIButton class]] || [sender isKindOfClass:[UIGestureRecognizer class]]))
     {
         NSLog(@"error. showInventory was called by a %@" , NSStringFromClass([sender class]));

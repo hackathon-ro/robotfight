@@ -133,7 +133,7 @@
 				
 				Player *player1 = [[[Player alloc] init] retain];
 				Player *player2 = [[[Player alloc] init] retain];
-				
+
 				player1.name        = username;
 				player1.hp          = 100;
 				player1.coordinates = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
