@@ -44,6 +44,9 @@ class GetUpdatesPage extends Page {
         while ($row = $stm->fetch()) {
             $updates[] = $row['data'];
         }
-        $this->result = $updates;
+        $this->result = [
+            'success' => true,
+            'updates' => $updates
+        ];
     }
 }
