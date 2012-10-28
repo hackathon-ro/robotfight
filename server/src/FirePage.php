@@ -47,7 +47,7 @@ class FirePage extends Page {
         $maxDamage = 50;
         $maxDistance = 1;
         $dmg = max(0, $maxDamage * ($maxDistance - Misc::distance($x, $y, $user['opponent_lat'], $user['opponent_long'])));
-        $hp = max(0, $user['hp'] - $dmg);
+        $hp = max(0, round($user['hp'] - $dmg));
 
         // Still alive?
         if ($hp > 0) {
@@ -97,7 +97,6 @@ class FirePage extends Page {
             ";
             $stm = $db->conn->prepare($sql);
             $result = $stm->execute([
-                ':hp' => $hp,
                 ':id' => $user['opponent_id']
             ]);
 

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../src/Database.php';
 /**
  * Simulate two users fighting each other. Server should be empty when testing so they will be matched with each other.
  */
-class ServerTest extends RequestTestCase {
+class FullGameTest extends RequestTestCase {
     function testLogin() {
         // Empty server.
         $db = Database::getInstance();
@@ -83,6 +83,14 @@ class ServerTest extends RequestTestCase {
         $this->assertTrue(abs($response['lat'] - $t2['x']) < $maxError);
         $this->assertTrue(abs($response['long'] - $t2['y']) < $maxError);
 
+        // Get updates for t2.
+        $response = $this->postRequest('get-updates', [
+            'token' => $t2['token']
+        ]);
+        $this->assertTrue($response['success'] === true);
+        $this->assertTrue(count($response['updates']) === 1);
+        $this->assertTrue($response['updates'][0]['action'] === 'hit');
+
         // Simulate that t1 tries to hit again, although it isn't his turn.
         $response = $this->postRequest('fire', [
             'token' => $t1['token'],
@@ -101,5 +109,24 @@ class ServerTest extends RequestTestCase {
         $this->assertTrue($response['success'] === true);
         $this->assertTrue(abs($response['lat'] - $t2['x']) > $minError);
         $this->assertTrue(abs($response['long'] - $t2['y']) > $minError);
+
+        // Simulate that t2 tries to hit again, although it isn't his turn.
+        $response = $this->postRequest('fire', [
+            'token' => $t2['token'],
+            'angle' => 10,
+            'power' => 0.1
+        ]);
+        $this->assertTrue($response['success'] === false);
+
+        // Simulate that t1 hits t2 with exact precision and kills him.
+        $maxError = 0.0001;
+        $response = $this->postRequest('fire', [
+            'token' => $t1['token'],
+            'angle' => 63.4349488,
+            'power' => 0.5
+        ]);
+        $this->assertTrue($response['success'] === true);
+        $this->assertTrue(abs($response['lat'] - $t2['x']) < $maxError);
+        $this->assertTrue(abs($response['long'] - $t2['y']) < $maxError);
     }
 }
