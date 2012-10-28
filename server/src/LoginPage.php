@@ -203,7 +203,8 @@ class LoginPage extends Page {
                     'wins' => $match['wins'],
                     'losses' => $match['losses'],
                     'lat' => $match['lat'],
-                    'long' => $match['long']
+                    'long' => $match['long'],
+                    'your-turn' => false
                 ]
             ]);
 
@@ -216,7 +217,8 @@ class LoginPage extends Page {
                     'wins' => $user['wins'],
                     'losses' => $user['losses'],
                     'lat' => $user['lat'],
-                    'long' => $user['long']
+                    'long' => $user['long'],
+                    'your-turn' => true
                 ]
             ]);
         }

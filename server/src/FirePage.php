@@ -8,5 +8,9 @@ class FirePage extends Page {
         ) {
             return;
         }
+
+        $this->result = [
+            'success' => true
+        ];
     }
 }

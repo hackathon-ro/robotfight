@@ -29,7 +29,7 @@ class ServerTest extends RequestTestCase {
         $this->assertTrue($response['success'] === true);
         $t1['token'] = $response['token'];
 
-        // Get updates for t1. Should be empty.
+        // Get updates for t1. Should be empty. He's the only guy on the server.
         $response = $this->postRequest('get-updates', [
             'token' => $t1['token']
         ]);
@@ -53,5 +53,25 @@ class ServerTest extends RequestTestCase {
         $this->assertTrue($response['success'] === true);
         $this->assertTrue(count($response['updates']) === 1);
         $this->assertTrue($response['updates'][0]['action'] === 'found-match');
+        $this->assertTrue($response['updates'][0]['data']['username'] === 'test1');
+        $this->assertTrue($response['updates'][0]['data']['your-turn'] === false);
+
+        // Get updates for t1. Should be matched with t2.
+        $response = $this->postRequest('get-updates', [
+            'token' => $t1['token']
+        ]);
+        $this->assertTrue($response['success'] === true);
+        $this->assertTrue(count($response['updates']) === 1);
+        $this->assertTrue($response['updates'][0]['action'] === 'found-match');
+        $this->assertTrue($response['updates'][0]['data']['username'] === 'test2');
+        $this->assertTrue($response['updates'][0]['data']['your-turn'] === true);
+
+        // Simulate that t1 hits t2.
+        $response = $this->postRequest('fire', [
+            'token' => $t1['token'],
+            'angle' => 60.3,
+            'power' => 12.34
+        ]);
+        $this->assertTrue($response['success'] === true);
     }
 }
