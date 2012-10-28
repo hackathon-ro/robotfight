@@ -2,7 +2,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SocialNetwork : UIViewController 
+@interface SocialNetwork : UIViewController
+{
+	NSTimer *timer;
+}
 - (IBAction)Twit:(id)sender;
 - (IBAction)PostToFacebook:(id)sender;
 - (IBAction)ShowPopOver:(id)sender;

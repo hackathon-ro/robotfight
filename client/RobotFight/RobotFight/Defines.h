@@ -6,10 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#define JSONServer @""
+#define JSONServer @"http://scoala59.ro/"
 #define imageGeneratorServer @"http://robohash.org/"
 #define mapScreenshotFilename   @"map.png"
 
 #define RADIANS(__X__) __X__ * M_PI / 180
 
 NSString *userName;
+CGSize winSize;
+float scaleFactor;

@@ -8,30 +8,48 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreMotion/CoreMotion.h>
 #import "Player.h"
 
-@interface PlayScene : UIViewController <MKMapViewDelegate , UIGestureRecognizerDelegate , CLLocationManagerDelegate>
+@interface PlayScene : UIViewController <MKMapViewDelegate , UIGestureRecognizerDelegate , CLLocationManagerDelegate , NSURLConnectionDataDelegate>
 {
     BOOL inventoryIsVisible;
     BOOL mapLoaded;
     int currentWeapon;
+    
+    NSMutableData *mutableData;
 
     CLLocationDirection initialHeading;
+    CLLocationDirection throwingHeading;
     CLLocationManager *locationManager;
     
+    CMMotionManager *motionManager;
+
     Player *player1;
     Player *player2;
+    
+    NSTimer *accelerometerTimer;
+    NSTimer *updatesTimer;
+    
+    CMAcceleration oldAcceleration;
+    CGPoint playerLocationInView;
+    
+    BOOL hasStartedMovement;
+    double throwingPower;
+    double previousPower;
+    
+    BOOL isTurn;
 }
 @property (nonatomic, retain) IBOutlet MKMapView    *mapView;
 @property (nonatomic, retain) IBOutlet UIImageView  *imageView;
 @property (nonatomic, retain) IBOutlet UIImageView  *diractionalArrow;
 @property (nonatomic, retain) CLLocationManager     *locationManager;
-@property (retain, nonatomic) IBOutlet UILabel *player1Label;
-@property (retain, nonatomic) IBOutlet UILabel *player2Label;
-@property (retain, nonatomic) IBOutlet UIProgressView *player1HP;
-@property (retain, nonatomic) IBOutlet UIProgressView *player2HP;
+@property (nonatomic, retain) IBOutlet UILabel      *player1Label;
+@property (nonatomic, retain) IBOutlet UILabel      *player2Label;
+@property (nonatomic, retain) IBOutlet UIProgressView *player1HP;
+@property (nonatomic, retain) IBOutlet UIProgressView *player2HP;
 
 
-- (id) initWithPlayer1:(Player *) _player1 Player2:(Player *) _player2;
-
+- (id) initWithPlayer1:(Player *) _player1 Player2:(Player *) _player2 isTurn:(BOOL) _isTurn;
+- (void) setIsTurn:(BOOL) newValue;
 @end
