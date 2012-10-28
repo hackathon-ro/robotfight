@@ -93,14 +93,20 @@ class GetUpdatesPage extends Page {
             ]);
         }
 
-        // Get updates while removing them for the database.
+        // Get updates while removing them for the database. One update at a time.
         $a = [
             'user_id' => ':user_id',
             'data' => ':data'
         ];
         $sql = "
             DELETE FROM updates
-            WHERE user_id = :user_id
+            WHERE id IN (
+                SELECT
+                    id
+                FROM updates
+                WHERE user_id = :user_id
+                LIMIT 1
+            )
             RETURNING
                 data
         ";

@@ -1,7 +1,8 @@
 <?
+// Usage: php -f bot.php BOTNAME HOSTNAME
+
 date_default_timezone_set('Europe/Bucharest');
-set_time_limit(5);
-//ob_start();
+set_time_limit(999999);
 
 global $name, $token;
 $name = $argv[1];
@@ -82,18 +83,19 @@ function fire() {
 function mylog($s) {
     echo '[ ' . date('H:i:s') . ' ] ';
     echo $s . "\n";
-//    ob_flush();
     flush();
 }
 
 function postRequest($action, $data) {
+	global $argv;
+	
     // Build URL.
     $get = [];
     foreach ($data as $key => $value) {
         $get[] = $key . '=' . $value;
     }
     $get = implode('&', $get);
-    $url = 'http://localhost/' . $action . '?' . $get;
+    $url = 'http://' . $argv[2] . '/' . $action . '?' . $get;
 
     // Get and parse result.
     $response = file_get_contents($url);

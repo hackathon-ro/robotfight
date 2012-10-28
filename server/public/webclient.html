@@ -1,0 +1,131 @@
+<html>
+<head>
+    <script src="jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRogs65ikEPif5QbrDTeSKJ3dRFMxExWU&sensor=false"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+        #map_canvas {
+            width: 100%;
+            height: 60%;
+        }
+        #console_container {
+            width: 100%;
+            height: 40%;
+        }
+        #console {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        $(document).ready(function() {
+            var lat = Math.random() * 50 + 40;
+            var long = Math.random() * 50 + 40;
+
+            var mapOptions = {
+                center: new google.maps.LatLng(lat, long),
+                zoom: 2,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+
+            var name = window.prompt('Your name?', '');
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(lat, long)
+            })
+
+            var rf = {};
+            rf.log = function(s) {
+                $('#console').html($('#console').html() + "\n" + s);
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+                dataType: 'json',
+                data: {
+                    username: name,
+                    'lat': lat,
+                    'long': long
+                },
+                success: function(response) {
+                    rf.token = response.token;
+                    setInterval(function() {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/get-updates',
+                            dataType: 'json',
+                            data: {
+                                token: rf.token
+                            },
+                            success: function(response) {
+                                //console.log('get-update', response);
+                                if (response === false) {
+                                    end();
+                                }
+                                for (var i = 0; i < response['updates'].length; i++) {
+                                    var r = response['updates'][i];
+                                    //console.log(r, 123);
+                                    switch (r['action']) {
+                                        case 'found-match':
+                                            rf.log('A match has been found!');
+                                            if (r['data']['your-turn'] == true) {
+                                                fire();
+                                            }
+                                            break;
+
+                                        case 'match-ended':
+                                            end();
+                                            break;
+
+                                        case 'hit':
+                                            fire();
+                                            break;
+                                    }
+                                }
+                            }
+                        });
+                    }, 1000);
+                    console.log(response);
+                }
+            });
+
+            function end() {
+                alert('Disconnected from the server.');
+                document.location = document.location;
+            }
+
+            function fire() {
+                console.log('your turn to fire');
+                $.ajax({
+					type: 'POST',
+					url: '/fire',
+					dataType: 'json',
+					data: {
+						token: rf.token,
+						power: window.prompt('Power? 0-1', ''),
+						angle: window.prompt('Angle?? 0 -359', '')
+					},
+					success: function(response) {
+						console.log('You left him with hp: ' + response.hp);
+					}
+				});
+            }
+        });
+    </script>
+    <div id="map">
+        <div id="map_canvas"></div>
+    </div>
+    <div id="console_container">
+        <textarea id="console">Welcome to The RobotFight WebClient!</textarea>
+    </div>
+</body>
+</html>
