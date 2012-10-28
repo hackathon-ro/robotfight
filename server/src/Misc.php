@@ -1,6 +1,6 @@
 <?
 class Misc {
-    const TIMEOUT = 15;
+    const TIMEOUT = 5;
 
     /*
      * Generates a random text containing letters (upper and lower case) and numbers.

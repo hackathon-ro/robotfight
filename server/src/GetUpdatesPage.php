@@ -39,8 +39,6 @@ class GetUpdatesPage extends Page {
             ':id' => $user['user_id']
         ]);
 
-//        var_dump($user);
-
         // Check if opponent timed out.
         $sql = "
             SELECT
@@ -84,7 +82,14 @@ class GetUpdatesPage extends Page {
             ";
             $stm = $db->conn->prepare($sql);
             $result = $stm->execute([
-                ':id' => $user['id']
+                ':id' => $user['user_id']
+            ]);
+
+            // Notify the current player that the match has ended.
+            $pushQueue = PushQueue::getInstance();
+            $pushQueue->add($user['user_id'], [
+                'action' => 'match-ended',
+                'data' => []
             ]);
         }
 

@@ -1,10 +1,18 @@
 <?
-set_time_limit(999999999);
+date_default_timezone_set('Europe/Bucharest');
+set_time_limit(5);
+//ob_start();
+
+global $name, $token;
+$name = $argv[1];
+$token = '';
 
 while (true) {
-    // Login.
-    $response = $this->postRequest('login', [
-        'username' => 'aibot',
+    mylog('I`m logging in.');
+
+    // login.
+    $response = postRequest('login', [
+        'username' => $name,
         'lat' => rand(40, 60),
         'long' => rand(40, 60)
     ]);
@@ -12,24 +20,70 @@ while (true) {
 
     while (true) {
         // Wait for match
-        $response = $this->postRequest('get-updates', [
+        $response = postRequest('get-updates', [
             'token' => $token
         ]);
+        if ($response === false) {
+            break 1;
+        }
         foreach ($response['updates'] as $r) {
             switch ($r['action']) {
                 case 'found-match':
+                    mylog('Match found! My nemesis: ' . $r['data']['username']);
+                    if ($r['data']['your-turn'] === true) {
+                        $response = fire();
+                        if ($response['hp'] == 0) {
+                            break 3;
+                        }
+                    }
+                    break;
+
+                case 'hit':
+                    mylog('I`ve been hit, Hp left: ' . $r['data']['hp']);
+                    if ($r['data']['hp'] == 0) {
+                        mylog('I died. :(');
+                        break 3;
+                    }
+                    $response = fire();
+                    if ($response['hp'] == 0) {
+                        break 3;
+                    }
                     break;
 
                 case 'match-ended':
+                    mylog('Match ended prematurely.');
                     break 3;
                     break;
 
             }
         }
-        usleep(0.5);
+//        break;
+        usleep(01.95);
     }
+//    break;
+    usleep(01.95);
+}
 
-    usleep(0.5);
+function fire() {
+    global $name, $token;
+    mylog('I`m firing!');
+    $response = postRequest('fire',  [
+        'token' => $token,
+        'power' => rand(0, 1000) / 1000,
+        'angle' => round(rand(0, 359))
+    ]);
+    mylog('I`ve left him with hp: ' . $response['hp']);
+    if ($response['hp'] === 0) {
+        mylog('I`ve won!');
+    }
+    return $response;
+}
+
+function mylog($s) {
+    echo '[ ' . date('H:i:s') . ' ] ';
+    echo $s . "\n";
+//    ob_flush();
+    flush();
 }
 
 function postRequest($action, $data) {
@@ -43,12 +97,14 @@ function postRequest($action, $data) {
 
     // Get and parse result.
     $response = file_get_contents($url);
-    print_r($url . "\n");
-    print_r($response . "\n\n");
-    $response = json_decode($response, true);
+    if ($action == 'get-updates' && $response == '{"success":true,"updates":[]}') {
 
-    // Assert that the response has been parsed successfully.
-    $this->assertTrue($response !== null);
+    }
+    else {
+        mylog('URL Request: ' . $url);
+        mylog('Response: ' . $response);
+    }
+    $response = json_decode($response, true);
 
     return $response;
 }
