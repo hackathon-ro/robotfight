@@ -124,7 +124,7 @@
 	NSString *powerString = [NSString stringWithFormat:@"%i", power];
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
+
 	NSString *userToken = [userDefaults objectForKey:@"token"];
 	
 	NSError *error;
@@ -629,6 +629,37 @@
     
     [progressView setProgress:player.hp/100.0];
     [progressView setProgressTintColor:[UIColor colorWithRed:(1 - player.hp/100.0) green:player.hp/100.0 blue:0 alpha:1]];
+    
+    if(progressView.progress <= 0)
+    {
+        [updatesTimer invalidate];
+        [updatesTimer release];
+        updatesTimer = nil;
+
+        [self showFinalScreen:player];
+    }
+}
+//******************************************************************************************************************************
+- (void) showFinalScreen:(Player *) player
+{
+    [self hideAttackUI];
+    UIView *backgroundView = [[[UIView alloc] initWithFrame:CGRectMake(50, 50, self.view.frame.size.width - 100, self.view.frame.size.height - 100)] autorelease];
+    [backgroundView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.7]];
+    backgroundView.layer.cornerRadius = 8;
+    [self.view addSubview:backgroundView];
+    
+    NSMutableDictionary *labelsDictionary = [NSMutableDictionary dictionary];
+    
+    if(player == player1)
+        [labelsDictionary setObject:@"LOSER!!!" forKey:@"title"];
+    else
+        [labelsDictionary setObject:@"WINNER!!!" forKey:@"title"];
+    
+    UILabel *largeLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, backgroundView.frame.size.width, backgroundView.frame.size.height)] autorelease];
+    [largeLabel setText:[labelsDictionary objectForKey:@"title"]];
+    [largeLabel setTextColor:[UIColor whiteColor]];
+    [largeLabel setFont:[UIFont boldSystemFontOfSize:26]];
+    [backgroundView addSubview:largeLabel];
 }
 //******************************************************************************************************************************
 - (void) setIsTurn:(BOOL) newValue
