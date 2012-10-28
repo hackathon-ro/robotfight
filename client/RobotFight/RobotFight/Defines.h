@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#define JSONServer @"http://10.10.2.97/"
+#define JSONServer @"http://scoala59.ro/"
 #define imageGeneratorServer @"http://robohash.org/"
 #define mapScreenshotFilename   @"map.png"
 

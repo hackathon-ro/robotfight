@@ -191,7 +191,7 @@
 				NSLog(@"Json to server: %@", text);
 				
 				NSMutableURLRequest *theRequest=[ NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@login" ,JSONServer ]] cachePolicy:NSURLRequestUseProtocolCachePolicy
-																	 timeoutInterval:0.5 ];
+																	 timeoutInterval:1.5 ];
 				
 				[theRequest setHTTPMethod: @"POST"];
 				[theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -205,6 +205,7 @@
 				}
 				serverInfo = [[[NSMutableData alloc] init] retain];
 				NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+                [theConnection start];
 				if(theConnection)
 				{
 					// connection succeeded
@@ -245,7 +246,7 @@
 	NSLog(@"Server info %@", serverInfo);
 	
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:serverInfo options:kNilOptions error:&error];
-	
+
 	NSLog(@"%@", json);
 	
     NSString *username  = [json objectForKey:@"username"];

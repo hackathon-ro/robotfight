@@ -32,7 +32,7 @@
 	
 	NSString *userToken = [userDefaults objectForKey:@"token"];
 	NSError  *error     = nil;
-	
+
 	NSDictionary *information   = [NSDictionary dictionaryWithObjectsAndKeys: userToken, @"token", nil];
 	NSData       *jsonData      = [NSJSONSerialization dataWithJSONObject: information options:NSJSONWritingPrettyPrinted error:&error];
 	
@@ -90,8 +90,7 @@
 		NSLog(@"Got here");
 		NSString *action = [json objectForKey:@"success"];
 		NSLog(@"Action: %@", action);
-		
-		
+
 		NSArray *updates = [json objectForKey:@"updates"];
 		
 		for(int i = 0; i < [updates count]; i++)

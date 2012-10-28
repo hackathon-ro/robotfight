@@ -79,7 +79,7 @@
 //******************************************************************************************************************************
 - (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    [self performSelector:@selector(makeScreenShot) withObject:nil afterDelay:2];
+    [self performSelector:@selector(makeScreenShot) withObject:nil afterDelay:5];
 }
 //******************************************************************************************************************************
 - (void) makeScreenShot
@@ -120,6 +120,7 @@
 //******************************************************************************************************************************
 - (void) sendParameters: (int) angle: (int) power: (Player*) player: (int) weaponID
 {
+    [self setIsTurn:FALSE];
 	NSString *angleString = [NSString stringWithFormat:@"%i", angle];
 	NSString *powerString = [NSString stringWithFormat:@"%i", power];
 	
@@ -138,7 +139,7 @@
 	
 	NSLog(@"JSON to server: %@", text);
 	
-	NSMutableURLRequest *theRequest=[ NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://10.10.2.97/get-updates"] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:0.5 ];
+	NSMutableURLRequest *theRequest=[ NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@get-updates", JSONServer]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:0.5 ];
 	
 	[theRequest setHTTPMethod: @"POST"];
 	[theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -219,11 +220,12 @@
 			if([act isEqualToString:@"hit"])
 			{
 				NSDictionary *information = [dictionary objectForKey:@"data"];
-				NSString *hp        = [information objectForKey:@"hp"   ];
+				NSString     *hp = [information objectForKey:@"hp"];
 
 				int hpIntegerValue = [hp integerValue];
                 player1.hp = hpIntegerValue;
 				[self updateHPForPlayer:player1];
+                [self setIsTurn:TRUE];
 			}
 		}
 	}
