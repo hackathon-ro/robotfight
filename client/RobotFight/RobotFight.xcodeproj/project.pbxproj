@@ -53,6 +53,7 @@
 		5E94E2DD163C6CCA0057BBE2 /* WeaponList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E94E2DC163C6CCA0057BBE2 /* WeaponList.plist */; };
 		5ED45088163C7A6A0078B4E0 /* dragArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED45087163C7A6A0078B4E0 /* dragArrow.png */; };
 		5ED4509B163C9B090078B4E0 /* directionalArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED4509A163C9B090078B4E0 /* directionalArrow.png */; };
+		9D4BA878163CEDDF00F5450A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4BA877163CEDDF00F5450A /* ViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		5E94E2DC163C6CCA0057BBE2 /* WeaponList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WeaponList.plist; sourceTree = "<group>"; };
 		5ED45087163C7A6A0078B4E0 /* dragArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragArrow.png; sourceTree = "<group>"; };
 		5ED4509A163C9B090078B4E0 /* directionalArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = directionalArrow.png; sourceTree = "<group>"; };
+		9D4BA877163CEDDF00F5450A /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 				5E12CCFF163CD87400344840 /* Player.m */,
 				5E12CD4E163CE67400344840 /* ViewController.h */,
 				5E12CD4F163CE67400344840 /* ViewController.m */,
+				9D4BA877163CEDDF00F5450A /* ViewController.xib */,
 				5E94E285163C4B2E0057BBE2 /* PlayScene.h */,
 				5E94E286163C4B2E0057BBE2 /* PlayScene.m */,
 				5E94E288163C4B2E0057BBE2 /* PlayScene.xib */,
@@ -395,6 +398,7 @@
 				5E12CD47163CE52D00344840 /* popoverBg.png in Resources */,
 				5E12CD48163CE52D00344840 /* popoverBg@2x.png in Resources */,
 				5E12CD49163CE52D00344840 /* popoverBgSimple.png in Resources */,
+				9D4BA878163CEDDF00F5450A /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
