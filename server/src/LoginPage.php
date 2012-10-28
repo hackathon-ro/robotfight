@@ -14,7 +14,8 @@ class LoginPage extends Page {
         // Get user and update his location.
         $a = [
             'long' => ':long',
-            'lat' => ':lat'
+            'lat' => ':lat',
+            'last_ping' => 'NOW()'
         ];
         $sql = "
             UPDATE users
@@ -47,7 +48,7 @@ class LoginPage extends Page {
                 'long' => ':long',
                 'lat' => ':lat',
                 'state' => UserStates::AWAITING_MATCH,
-                'match_making_began_on' => 'NOW()'
+                'last_ping' => 'NOW()'
             ];
             $sql = "
                 INSERT INTO users " . Misc::arrayToInsertQuery($a) . "
@@ -77,10 +78,10 @@ class LoginPage extends Page {
                 DELETE FROM updates
                 WHERE user_id = :user_id
             ";
-                $stm = $db->conn->prepare($sql);
-                $result = $stm->execute([
-                    ':user_id' => $user['id']
-                ]);
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                ':user_id' => $user['id']
+            ]);
         }
 
         // Reset user state for users that were playing with this user.
@@ -94,16 +95,31 @@ class LoginPage extends Page {
         $result = $stm->execute([
             ':opponent_id' => $user['id']
         ]);
-        while ($row = $stm->fetch()) {
+        while ($opponent = $stm->fetch()) {
             // Notify that the match has ended.
             $pushQueue = PushQueue::getInstance();
-            $pushQueue->add('match-ended', []);
+            $pushQueue->add($opponent['id'], [
+                'action' => 'match-ended',
+                'data' => []
+            ]);
 
-            $this->startMatchMaking($row['id']);
+            // Set disconnected state.
+            $a = [
+                'state' => UserStates::DISCONNECTED
+            ];
+            $sql = "
+                UPDATE users
+                SET " . Misc::arrayToUpdateQuery($a) . "
+                WHERE
+                    id = :id
+            ";
+            $stm = $db->conn->prepare($sql);
+            $result = $stm->execute([
+                ':id' => $opponent['id']
+            ]);
+
+//            $this->startMatchMaking($row['id']);
         }
-
-        // Do match-making.
-        $this->startMatchMaking($user['id']);
 
         // Delete other sessions for this user.
         $sql = "
@@ -129,6 +145,9 @@ class LoginPage extends Page {
             ':user_id' => $user['id'],
             ':token' => $token
         ]);
+
+        // Do match-making.
+        $this->startMatchMaking($user['id']);
 
         // Return data.
         $this->result = [
@@ -181,7 +200,7 @@ class LoginPage extends Page {
             FROM users
             WHERE
                 state = " . UserStates::AWAITING_MATCH . " AND
-                match_making_began_on > NOW() - INTERVAL '10 seconds' AND
+                last_ping > NOW() - INTERVAL '15 seconds' AND
                 id != :user_id
             ORDER BY match_making_began_on ASC
             LIMIT 1

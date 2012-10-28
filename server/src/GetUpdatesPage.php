@@ -25,6 +25,18 @@ class GetUpdatesPage extends Page {
         }
         $user = $stm->fetch();
 
+        // Update user info.
+        $sql = "
+            UPDATE users
+            SET
+                last_ping = NOW()
+            WHERE id = :id
+        ";
+        $stm = $db->conn->prepare($sql);
+        $result = $stm->execute([
+            ':id' => $user['user_id']
+        ]);
+
 //        var_dump($user);
 
         // Get updates while removing them for the database.
@@ -45,10 +57,10 @@ class GetUpdatesPage extends Page {
         $updates = [];
 
         // Hardcoded debugging! So clean!
-        if ($this->data['token'] == '74MdYwtfh7ng8Hxd3y2WM8CU') {
-            $updates[] = json_decode('{"action":"match-found","data":{"username":"gigi","lat":10,"long":10,"your-turn":false}}');
-            $updates[] = json_decode('{"action":"hit","data":{"lat": "11", "long": "12", "hp": "25"}}');
-        }
+//        if ($this->data['token'] == '74MdYwtfh7ng8Hxd3y2WM8CU') {
+//            $updates[] = json_decode('{"action":"match-found","data":{"username":"gigi","lat":10,"long":10,"your-turn":false}}');
+//            $updates[] = json_decode('{"action":"hit","data":{"lat": "11", "long": "12", "hp": "25"}}');
+//        }
 
         while ($row = $stm->fetch()) {
             $updates[] = json_decode($row['data']);
